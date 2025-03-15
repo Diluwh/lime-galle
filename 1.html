@@ -1,1 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lime Coin Airdrop</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .header {
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 28px;
+            font-weight: bold;
+            color: #c7f169;
+        }
+        
+        .logo img {
+            width: 40px;
+            height: 40px;
+            animation: rotate 10s linear infinite;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 500px;
+            margin: 50px auto;
+            padding: 30px;
+            background-color: rgba(0, 0, 0, 0.4);
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .coin {
+            width: 150px;
+            height: 150px;
+            margin: 30px 0;
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        
+        .coin img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.5));
+        }
+        
+        .coin:hover {
+            transform: scale(1.05);
+        }
+        
+        .coin:active {
+            transform: scale(0.95);
+        }
+        
+        .points {
+            font-size: 24px;
+            margin: 20px 0;
+            color: #c7f169;
+            font-weight: bold;
+        }
+        
+        .points-value {
+            font-size: 32px;
+            margin-top: 10px;
+            color: white;
+        }
+        
+        .tabs {
+            display: flex;
+            width: 100%;
+            margin-top: 40px;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .tab {
+            flex: 1;
+            padding: 15px;
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .tab:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        .tab.active {
+            background-color: #c7f169;
+            color: #1a1a2e;
+            font-weight: bold;
+        }
+        
+        .notification {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(255, 0, 0, 0.8);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            font-size: 16px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+        }
+        
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        .coin-click-effect {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background: radial-gradient(circle, rgba(199, 241, 105, 0.8) 0%, rgba(199, 241, 105, 0) 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: expandFade 0.6s forwards;
+        }
+        
+        @keyframes expandFade {
+            0% { transform: scale(0); opacity: 1; }
+            100% { transform: scale(4); opacity: 0; }
+        }
+        
+        .counter-animation {
+            animation: countUp 0.5s ease-out;
+        }
+        
+        @keyframes countUp {
+            0% { transform: scale(1.5); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo">
+            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBkPSJNNDkwLjY3NyAyMDEuMDgzYy0xNy4xNzgtMjcuMTMtNDAuMDU0LTQ4LjY2Ny02OC43ODQtNjEuNTk4LTI3LjIzOC0xMi4yOTEtNTYuNTU0LTE2LjY4LTg0Ljk1MS0xMi45NjUtMjkuNjE3IDMuODg0LTU2LjIxNCAxNi4wNjktNzcuOTgxIDM1LjkwMy0xMS4xODcgMTAuMjA3LTIwLjkxIDIyLjA4Ni0yOS4xNiAzNS4yNDRDMjEyLjg0OSAxNjkuOTY1IDE4OS44NyAxNTUgMTY0IDEzNS4yNTljLTMuMzA1LTIuNTEyLTcuOTQ4LTIuMjMyLTEwLjkxIDAuNjI1LTEwLjA3MyA5LjcxLTIyLjQ2MyAxNi41NzctMzUuNzcyIDIwLjE2LTEzLjEwMyAzLjU0Ni0yNi44MTMgNC4wODgtNDAuNTY4IDEuNjAyLTIwLjcwMi0zLjU0LTQwLjM4My0xMy4yNjYtNTcuMDYtMjguMjE1QzEzLjk2NSAxMjUuNDY4IDguMzM2IDEyMS40MzYgMCAxMjEuMjA2VjM3MGMwIDAgNjguNDIyIDc0LjU2NSAxNDguMjE5IDExMC4zMjhjMzguNTA5IDExLjUgNzcuNzUgMTQuMTc2IDExNi44MDUgNi42MjggNzMuMTEyLTE0LjEyIDEzNC40MTMtNTMuMzU5IDE3OS41NzEtMTEzLjM4NyAyOC4xOTQtMzkuOTM3IDQ3LjI2Ni04My45MjQgNTYuNTc5LTEzMC45NjZDNTEwLjE0MiAyMDIuMTA0IDUwMS43MzggMTkxLjE5OSA0OTAuNjc3IDIwMS4wODN6IiBmaWxsPSIjYzdmMTY5Ii8+PC9zdmc+" alt="Lime Logo">
+            LIME COIN
+        </div>
+    </div>
+    
+    <div class="container">
+        <h2>Tap the coin to earn points!</h2>
+        
+        <div class="coin" id="coin">
+            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48ZGVmcz48cmFkaWFsR3JhZGllbnQgaWQ9ImEiIGN4PSIyNTYiIGN5PSIyNTYiIHI9IjI1NiIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPjxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iI2ZmZDcwMCIvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iI2YyYzAwMCIvPjwvcmFkaWFsR3JhZGllbnQ+PGxpbmVhckdyYWRpZW50IGlkPSJiIiB4MT0iMjU2IiB5MT0iNDgiIHgyPSIyNTYiIHkyPSI0NjQiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiNmZmVkNWEiLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiNkYWExMDAiLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48Y2lyY2xlIGN4PSIyNTYiIGN5PSIyNTYiIHI9IjI1NiIgZmlsbD0idXJsKCNhKSIvPjxjaXJjbGUgY3g9IjI1NiIgY3k9IjI1NiIgcj0iMjA4IiBmaWxsPSJ1cmwoI2IpIi8+PHRleHQgeD0iMjU2IiB5PSIyODAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxMDBweCIgZm9udC13ZWlnaHQ9ImJvbGQiIGZpbGw9IiNmZmYiPiQ8L3RleHQ+PC9zdmc+" alt="Dollar Coin">
+        </div>
+        
+        <div class="points">
+            Your Points: <span class="points-value" id="points">0</span>
+        </div>
+        
+        <div class="tabs">
+            <div class="tab active">Earn</div>
+            <div class="tab" id="withdrawTab">Withdraw</div>
+        </div>
+    </div>
+    
+    <div class="notification" id="notification">
+        Not enough coins!
+    </div>
 
+    <script>
+        // Load points from localStorage on page load
+        let points = parseInt(localStorage.getItem('limePoints')) || 0;
+        const pointsDisplay = document.getElementById('points');
+        const coin = document.getElementById('coin');
+        const withdrawTab = document.getElementById('withdrawTab');
+        const notification = document.getElementById('notification');
+        
+        // Initialize points display
+        pointsDisplay.textContent = points;
+        
+        // Function to add click effect
+        function createClickEffect(e) {
+            const effect = document.createElement('div');
+            effect.classList.add('coin-click-effect');
+            
+            // Position the effect at click position
+            const rect = coin.getBoundingClientRect();
+            const x = e.clientX - rect.left - 25;
+            const y = e.clientY - rect.top - 25;
+            
+            effect.style.left = x + 'px';
+            effect.style.top = y + 'px';
+            
+            coin.appendChild(effect);
+            
+            // Remove effect after animation completes
+            setTimeout(() => {
+                effect.remove();
+            }, 600);
+        }
+        
+        // Add point when coin is clicked
+        coin.addEventListener('click', function(e) {
+            points++;
+            pointsDisplay.textContent = points;
+            
+            // Save points to localStorage
+            localStorage.setItem('limePoints', points);
+            
+            // Add animation to counter
+            pointsDisplay.classList.remove('counter-animation');
+            void pointsDisplay.offsetWidth; // Force reflow
+            pointsDisplay.classList.add('counter-animation');
+            
+            // Create click effect
+            createClickEffect(e);
+            
+            // Add slight rotation to coin on click
+            coin.style.transform = `rotate(${Math.random() * 10 - 5}deg)`;
+            setTimeout(() => {
+                coin.style.transform = '';
+            }, 300);
+        });
+        
+        // Show notification when withdraw tab is clicked
+        withdrawTab.addEventListener('click', function() {
+            notification.style.opacity = '1';
+            
+            setTimeout(() => {
+                notification.style.opacity = '0';
+            }, 2000);
+        });
+        
+        // Add beforeunload event to ensure data is saved
+        window.addEventListener('beforeunload', function() {
+            localStorage.setItem('limePoints', points);
+        });
+    </script>
+</body>
+</html>
